@@ -52,7 +52,7 @@ services:
     defaultUUID: "pie-dev-1"
     github:
       repository: 'WebLegends/signatpolicyai'
-      branchName: 'develop'
+      branchName: 'feature/working-on-docker-support'
       docker:
         builder:
           engine: 'buildkit'
