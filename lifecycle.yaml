@@ -51,7 +51,7 @@ services:
   - name: "piefrontend"
     defaultUUID: "pie-dev-1"
     github:
-      repository: 'signatpolicyai'
+      repository: 'WebLegends/signatpolicyai'
       branchName: 'feature/working-on-docker-support'
       docker:
         builder:
