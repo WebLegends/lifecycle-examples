@@ -49,14 +49,14 @@ services:
           defaultInternalHostname: 'frontend-dev-0'
 
   - name: "piefrontend"
-    defaultUUID: "dev-1"
+    defaultUUID: "pie-dev-1"
     github:
       repository: 'WebLegends/signatpolicyai'
       branchName: 'feature/working-on-docker-support'
       docker:
         builder:
           engine: 'buildkit'
-        defaultTag: 'feature/working-on-docker-support'
+        defaultTag: 'latest'
         app:
           dockerfilePath: 'Dockerfile'
           ports:
