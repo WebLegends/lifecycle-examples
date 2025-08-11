@@ -49,7 +49,7 @@ services:
           defaultInternalHostname: 'frontend-dev-0'
 
   - name: "piefrontend"
-    defaultUUID: "pie-dev-1"
+    defaultUUID: "pie-frontend-1"
     github:
       repository: 'WebLegends/signatpolicyai'
       branchName: 'docker-deploy'
@@ -70,7 +70,7 @@ services:
         readiness:
           tcpSocketPort: 3000
         hostnames:
-          defaultInternalHostname: 'frontend-dev-0'
+          defaultInternalHostname: 'pie-frontend-dev-0'
 
   - name: "backend"
     requires:
