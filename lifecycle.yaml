@@ -52,7 +52,7 @@ services:
     defaultUUID: "pie-dev-1"
     github:
       repository: 'WebLegends/signatpolicyai'
-      branchName: 'feature/working-on-docker-support'
+      branchName: 'docker-deploy'
       docker:
         builder:
           engine: 'buildkit'
@@ -64,19 +64,7 @@ services:
           env:
             COMPONENT: "app"
             ENV: "lifecycle"
-            DATABASE_URL: "postgresql://signatai_owner:9IkiqCnNY4wr@ep-weathered-firefly-a5tqlqlq.us-east-2.aws.neon.tech/signatai?sslmode=require"
-            CLERK_SECRET_KEY: "sk_test_5Po9ye7JsrVQhoWxvcHP1lAAXeN6h1WcQEcFvNxjuk"
-            SIGNAT_EPIC_API_URL: "https://signataiepicfunc.azurewebsites.net/api"
-            SIGNAT_POLICY_API_USERNAME: "signat"
-            SIGNAT_POLICY_API_PASSWORD: "plrkIg7y7DI1"
-            CRON_SECRET: "q8fsg3yfK1KuKYaEQMQoisfy"
-            MAILGUN_DOMAIN: "mg.legendari.tech"
-            MAILGUN_EMAIL_FROM: "noreplay@legendari.tech"
-            NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk_test_cGxlYXNhbnQtbXVzdGFuZy0yMS5jbGVyay5hY2NvdW50cy5kZXYk"
-            NEXT_PUBLIC_CLERK_SIGN_IN_URL: "/sign-in"
-            NEXT_PUBLIC_ABLY_API_KEY: "yzvXHA.RJBkQA:-oW7-TmY9iBokSGohtUcgZbURWhoOljEjC-4x1O41hg"
-            NEXT_PUBLIC_BYTESCALE_APIKEY: "public_FW25c87As5Ydp31ytgwjYkDJwFsn"
-            SIGNATAI_API_ENV: "dev"
+            DOPPLER_TOKEN: "dp.pt.vwUWJbmzTfeygQB1y9OB1P9a0T74BgWgLBQiWsYsPQi"
       deployment:
         public: true
         readiness:
