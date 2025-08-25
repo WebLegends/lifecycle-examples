@@ -64,7 +64,7 @@ services:
           env:
             COMPONENT: "app"
             ENV: "lifecycle"
-            DOPPLER_TOKEN: "{{{DOPPLER_TOKEN}}}"
+            DOPPLER_TOKEN: "{{{buildUUID}}}"
       deployment:
         public: true
         readiness:
