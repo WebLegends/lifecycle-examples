@@ -15,11 +15,11 @@
 environment:
   autoDeploy: true
   defaultServices:
-    - name: "frontend"
+    - name: "frontend1"
 
 services:
-  - name: "frontend"
-    defaultUUID: "dev-0"
+  - name: "frontend1"
+    defaultUUID: "dev-1"
     github:
       repository: 'WebLegends/signatpolicyai'
       branchName: 'docker-deploy'
