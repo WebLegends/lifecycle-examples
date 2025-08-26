@@ -17,11 +17,10 @@ environment:
   defaultServices:
     - name: "frontend"
   optionalServices:
-    - name: "backend"
 
 services:
   - name: "frontend"
-    defaultUUID: "dev-1"
+    defaultUUID: "dev-0"
     github:
       repository: 'WebLegends/signatpolicyai'
       branchName: 'docker-deploy'
@@ -38,23 +37,4 @@ services:
         public: true
         readiness:
           tcpSocketPort: 3000
-
-  - name: "backend"
-    requires:
-      - name: "db"
-    defaultUUID: "dev-0"
-    docker:
-      dockerImage: "lifecycleoss/example-backend"
-      defaultTag: "0.1.0"
-      ports:
-        - 8080
-      env:
-        COMPONENT: "server"
-        ENV: "lifecycle"
-        DATABASE_URL: "{{{db_internalHostname}}}"
-        DATABASE_PORT: "5432"
-      deployment:
-        public: true
-        readiness:
-          tcpSocketPort: 8080
           
