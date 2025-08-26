@@ -24,7 +24,7 @@ services:
     defaultUUID: "dev-1"
     github:
       repository: 'WebLegends/signatpolicyai'
-      branchName: 'main'
+      branchName: 'docker-deploy'
       docker:
         builder:
           engine: 'buildkit'
@@ -38,8 +38,6 @@ services:
         public: true
         readiness:
           tcpSocketPort: 3000
-        hostnames:
-          defaultInternalHostname: 'frontend-dev-0'
 
   - name: "backend"
     requires:
