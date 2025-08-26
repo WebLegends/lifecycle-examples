@@ -14,13 +14,9 @@
 
 environment:
   autoDeploy: true
-  defaultServices:
-    - name: "piefrontend"
-      repository: "WebLegends/signatpolicyai"
-      branch: "docker-deploy"
   optionalServices:
     - name: "frontend"
-    - name: "backend"
+    - name: "piefrontend"
     - name: "cache"
 
 services:
