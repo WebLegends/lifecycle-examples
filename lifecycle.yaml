@@ -16,6 +16,8 @@ environment:
   autoDeploy: true
   defaultServices:
     - name: "piefrontend"
+      repository: "WebLegends/signatpolicyai"
+      branch: "docker-deploy"
   optionalServices:
     - name: "frontend"
     - name: "backend"
@@ -51,14 +53,14 @@ services:
   - name: "piefrontend"
     defaultUUID: "pie-frontend-1"
     github:
-      repository: 'WebLegends/signatpolicyai'
-      branchName: 'docker-deploy'
+      repository: "WebLegends/signatpolicyai"
+      branchName: "docker-deploy"
       docker:
         builder:
-          engine: 'buildkit'
-        defaultTag: 'main'
+          engine: "buildkit"
+        defaultTag: "main"
         app:
-          dockerfilePath: 'Dockerfile'
+          dockerfilePath: "Dockerfile"
           ports:
             - 3000
           env:
