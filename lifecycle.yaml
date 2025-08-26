@@ -21,7 +21,7 @@ environment:
 
 services:
   - name: "frontend"
-    defaultUUID: "pie-frontend-1"
+    defaultUUID: "dev-1"
     github:
       repository: 'WebLegends/signatpolicyai'
       branchName: 'docker-deploy'
