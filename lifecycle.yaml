@@ -15,40 +15,12 @@
 environment:
   autoDeploy: true
   defaultServices:
-    - name: "piefrontend"
-  optionalServices:
     - name: "frontend"
+  optionalServices:
     - name: "backend"
-    - name: "cache"
 
 services:
   - name: "frontend"
-    defaultUUID: "dev-0"
-    github:
-      repository: 'WebLegends/lifecycle-examples'
-      branchName: 'main'
-      docker:
-        builder:
-          engine: 'buildkit'
-        defaultTag: 'main'
-        app:
-          dockerfilePath: 'Dockerfile.frontend'
-          ports:
-            - 3000
-          env:
-            COMPONENT: "app"
-            ENV: "lifecycle"
-            API_URL: "https://{{{backend_publicUrl}}}"
-            CACHE_URL: "{{{cache_internalHostname}}}"
-            WES_IS: "GOAT"
-      deployment:
-        public: true
-        readiness:
-          tcpSocketPort: 3000
-        hostnames:
-          defaultInternalHostname: 'frontend-dev-0'
-
-  - name: "piefrontend"
     defaultUUID: "pie-frontend-1"
     github:
       repository: 'WebLegends/signatpolicyai'
@@ -62,14 +34,12 @@ services:
           ports:
             - 3000
           env:
-            COMPONENT: "app"
-            ENV: "lifecycle"
       deployment:
         public: true
         readiness:
           tcpSocketPort: 3000
         hostnames:
-          defaultInternalHostname: 'pie-frontend-dev-0'
+          defaultInternalHostname: 'frontend-dev-0'
 
   - name: "backend"
     requires:
@@ -90,35 +60,3 @@ services:
         readiness:
           tcpSocketPort: 8080
           
-  - name: "db"
-    defaultUUID: "dev-0"
-    docker:
-      dockerImage: "lifecycleoss/example-db"
-      defaultTag: "0.1.0"
-      ports:
-        - 5432
-      env:
-        COMPONENT: "db"
-        ENV: "lifecycle"
-        POSTGRES_DB: tasks
-        POSTGRES_USER: lifecycle
-        POSTGRES_PASSWORD: mysecretpassword
-      deployment:
-        public: false
-        readiness:
-          tcpSocketPort: 5432
-          
-  - name: "cache"
-    defaultUUID: "dev-0"
-    docker:
-      dockerImage: "redis"
-      defaultTag: "8.0.2"
-      ports:
-        - 6379
-      env:
-        COMPONENT: "cache"
-        ENV: "lifecycle"
-      deployment:
-        public: false
-        readiness:
-          tcpSocketPort: 6379
