@@ -26,7 +26,7 @@ services:
       docker:
         builder:
           engine: 'buildkit'
-        defaultTag: 'latest'
+        defaultTag: 'main'
         app:
           dockerfilePath: 'Dockerfile'
           ports:
