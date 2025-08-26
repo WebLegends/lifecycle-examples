@@ -64,7 +64,7 @@ services:
           env:
             COMPONENT: "app"
             ENV: "lifecycle"
-            DOPPLER_TOKEN: "dp.st.dev.8GOKglKO8mQLMKckm0m3Z8fHKxc3kohEpAYgi8dVU4T"
+            DOPPLER_TOKEN: "dp.st.dev.ONyfstXTnPwscIhxM2mNJ3hRMrvhs0IfaZl0tJSIlf1"
       deployment:
         public: true
         readiness:
