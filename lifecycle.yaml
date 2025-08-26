@@ -15,16 +15,17 @@
 environment:
   autoDeploy: true
   defaultServices:
+    - name: "piefrontend"
+  optionalServices:
     - name: "frontend"
     - name: "backend"
-  optionalServices:
     - name: "cache"
 
 services:
   - name: "frontend"
     defaultUUID: "dev-0"
     github:
-      repository: 'GoodRxOSS/lifecycle-examples'
+      repository: 'WebLegends/lifecycle-examples'
       branchName: 'main'
       docker:
         builder:
@@ -46,7 +47,30 @@ services:
           tcpSocketPort: 3000
         hostnames:
           defaultInternalHostname: 'frontend-dev-0'
-          
+
+  - name: "piefrontend"
+    defaultUUID: "pie-frontend-1"
+    github:
+      repository: 'WebLegends/signatpolicyai'
+      branchName: 'docker-deploy'
+      docker:
+        builder:
+          engine: 'buildkit'
+        defaultTag: 'latest'
+        app:
+          dockerfilePath: 'Dockerfile'
+          ports:
+            - 3000
+          env:
+            COMPONENT: "app"
+            ENV: "lifecycle"
+      deployment:
+        public: true
+        readiness:
+          tcpSocketPort: 3000
+        hostnames:
+          defaultInternalHostname: 'pie-frontend-dev-0'
+
   - name: "backend"
     requires:
       - name: "db"
