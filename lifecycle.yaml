@@ -66,12 +66,12 @@ services:
           tcpSocketPort: 80
         hostnames:
           defaultInternalHostname: 'frontend-dev-0'
-        serviceDisks:
-          - name: 'apivolume1'
-            mountPath: '/etc/api'
-            accessModes: 'ReadWriteOnce'
-            storageSize: '10Gi'
-            medium: 'gp2'
+#        serviceDisks:
+#          - name: 'apivolume1'
+#            mountPath: '/etc/api'
+#            accessModes: 'ReadWriteOnce'
+#            storageSize: '10Gi'
+#            medium: 'gp2'
 
 
   - name: "worker"
@@ -99,12 +99,12 @@ services:
           tcpSocketPort: 80
         hostnames:
           defaultInternalHostname: 'worker-dev-0'
-        serviceDisks:
-          - name: 'queuevolume1'
-            mountPath: '/etc/queue'
-            accessModes: 'ReadWriteOnce'
-            storageSize: '10Gi'
-            medium: 'gp2'
+#        serviceDisks:
+#          - name: 'queuevolume1'
+#            mountPath: '/etc/queue'
+#            accessModes: 'ReadWriteOnce'
+#            storageSize: '10Gi'
+#            medium: 'gp2'
 
           
   - name: "redis"
