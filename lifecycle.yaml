@@ -17,6 +17,7 @@ environment:
   optionalServices:
     - name: "frontend"
     - name: "api"
+    - name: "worker"
     - name: "redis"
 
 services:
@@ -56,12 +57,54 @@ services:
           dockerfilePath: "api/Dockerfile"
           ports:
             - 80
+          env:
+            CELERY_BROKER_URL: "{{{redis_internalHostname}}}"
+            CELERY_RESULT_BACKEND: "{{{redis_internalHostname}}}"
       deployment:
         public: false
         readiness:
           tcpSocketPort: 80
         hostnames:
           defaultInternalHostname: 'frontend-dev-0'
+        serviceDisks:
+          - name: 'apivolume1'
+            mountPath: '/etc/api'
+            accessModes: 'ReadWriteOnce'
+            storageSize: '10Gi'
+            medium: 'gp2'
+
+
+  - name: "worker"
+    requires:
+      - name: "redis"
+    defaultUUID: "worker-dev-0"
+    github:
+      repository: "WebLegends/signat-ai-api"
+      branchName: "docker-deploy"
+      docker:
+        builder:
+          engine: "buildkit"
+        defaultTag: "main"
+        app:
+          dockerfilePath: "celeryqueue/Dockerfile"
+          command: "celery -A tasks worker -l info -E"
+          ports:
+            - 80
+          env:
+            CELERY_BROKER_URL: "{{{redis_internalHostname}}}"
+            CELERY_RESULT_BACKEND: "{{{redis_internalHostname}}}"
+      deployment:
+        public: false
+        readiness:
+          tcpSocketPort: 80
+        hostnames:
+          defaultInternalHostname: 'worker-dev-0'
+        serviceDisks:
+          - name: 'queuevolume1'
+            mountPath: '/etc/queue'
+            accessModes: 'ReadWriteOnce'
+            storageSize: '10Gi'
+            medium: 'gp2'
 
           
   - name: "redis"
