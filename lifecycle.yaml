@@ -35,6 +35,8 @@ services:
           dockerfilePath: "Dockerfile"
           ports:
             - 3000
+          env:
+            SIGNATAI_API_ENDPOINT: "http://{{{api_internalHostname}}}"
       deployment:
         public: true
         readiness:
