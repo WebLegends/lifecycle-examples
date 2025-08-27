@@ -58,8 +58,8 @@ services:
           ports:
             - 80
           env:
-            CELERY_BROKER_URL: "{{{redis_internalHostname}}}"
-            CELERY_RESULT_BACKEND: "{{{redis_internalHostname}}}"
+            CELERY_BROKER_URL: "redis://{{{redis_internalHostname}}}:6379"
+            CELERY_RESULT_BACKEND: "redis://{{{redis_internalHostname}}}:6379"
       deployment:
         public: false
         readiness:
@@ -91,8 +91,8 @@ services:
           ports:
             - 80
           env:
-            CELERY_BROKER_URL: "{{{redis_internalHostname}}}"
-            CELERY_RESULT_BACKEND: "{{{redis_internalHostname}}}"
+            CELERY_BROKER_URL: "redis://{{{redis_internalHostname}}}:6379"
+            CELERY_RESULT_BACKEND: "redis://{{{redis_internalHostname}}}:6379"
       deployment:
         public: false
         readiness:
