@@ -50,7 +50,7 @@ services:
     defaultUUID: "pie-frontend-1"
     github:
       repository: "WebLegends/signatpolicyai"
-      branchName: "docker-deploy"
+      branchName: "main"
       docker:
         builder:
           engine: "buildkit"
