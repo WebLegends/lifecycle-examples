@@ -14,78 +14,103 @@
 
 environment:
   autoDeploy: true
-  defaultServices:
-    - name: "frontend"
-    - name: "backend"
   optionalServices:
-    - name: "cache"
+    - name: "frontend"
+    - name: "api"
+    - name: "worker"
+    - name: "redis"
 
 services:
+
   - name: "frontend"
-    defaultUUID: "dev-0"
+    defaultUUID: "frontend-dev-0"
     github:
-      repository: 'GoodRxOSS/lifecycle-examples'
-      branchName: 'main'
+      repository: "WebLegends/signatpolicyai"
+      branchName: "docker-deploy"
       docker:
         builder:
-          engine: 'buildkit'
-        defaultTag: 'main'
+          engine: "buildkit"
+        defaultTag: "main"
         app:
-          dockerfilePath: 'Dockerfile.frontend'
+          dockerfilePath: "Dockerfile"
           ports:
             - 3000
           env:
-            COMPONENT: "app"
-            ENV: "lifecycle"
-            API_URL: "https://{{{backend_publicUrl}}}"
-            CACHE_URL: "{{{cache_internalHostname}}}"
-            WES_IS: "GOAT"
+            SIGNATAI_API_ENDPOINT: "http://{{{api_internalHostname}}}"
       deployment:
         public: true
         readiness:
           tcpSocketPort: 3000
         hostnames:
           defaultInternalHostname: 'frontend-dev-0'
-          
-  - name: "backend"
+
+  - name: "api"
     requires:
-      - name: "db"
-    defaultUUID: "dev-0"
-    docker:
-      dockerImage: "lifecycleoss/example-backend"
-      defaultTag: "0.1.0"
-      ports:
-        - 8080
-      env:
-        COMPONENT: "server"
-        ENV: "lifecycle"
-        DATABASE_URL: "{{{db_internalHostname}}}"
-        DATABASE_PORT: "5432"
-      deployment:
-        public: true
-        readiness:
-          tcpSocketPort: 8080
-          
-  - name: "db"
-    defaultUUID: "dev-0"
-    docker:
-      dockerImage: "lifecycleoss/example-db"
-      defaultTag: "0.1.0"
-      ports:
-        - 5432
-      env:
-        COMPONENT: "db"
-        ENV: "lifecycle"
-        POSTGRES_DB: tasks
-        POSTGRES_USER: lifecycle
-        POSTGRES_PASSWORD: mysecretpassword
+      - name: "redis"
+    defaultUUID: "api-dev-0"
+    github:
+      repository: "WebLegends/signat-ai-api"
+      branchName: "docker-deploy"
+      docker:
+        builder:
+          engine: "buildkit"
+        defaultTag: "main"
+        app:
+          dockerfilePath: "api/Dockerfile"
+          ports:
+            - 80
+          env:
+            CELERY_BROKER_URL: "redis://{{{redis_internalHostname}}}:6379"
+            CELERY_RESULT_BACKEND: "redis://{{{redis_internalHostname}}}:6379"
       deployment:
         public: false
         readiness:
-          tcpSocketPort: 5432
+          tcpSocketPort: 80
+        hostnames:
+          defaultInternalHostname: 'frontend-dev-0'
+#        serviceDisks:
+#          - name: 'apivolume1'
+#            mountPath: '/etc/api'
+#            accessModes: 'ReadWriteOnce'
+#            storageSize: '10Gi'
+#            medium: 'gp2'
+
+
+  - name: "worker"
+    requires:
+      - name: "redis"
+    defaultUUID: "worker-dev-0"
+    github:
+      repository: "WebLegends/signat-ai-api"
+      branchName: "docker-deploy"
+      docker:
+        builder:
+          engine: "buildkit"
+        defaultTag: "main"
+        app:
+          dockerfilePath: "celeryqueue/Dockerfile"
+          command: "celery -A tasks worker -l info -E"
+          ports:
+            - 80
+          env:
+            CELERY_BROKER_URL: "redis://{{{redis_internalHostname}}}:6379"
+            CELERY_RESULT_BACKEND: "redis://{{{redis_internalHostname}}}:6379"
+      deployment:
+        public: false
+        readiness:
+          tcpSocketPort: 80
+        hostnames:
+          defaultInternalHostname: 'worker-dev-0'
+#        serviceDisks:
+#          - name: 'queuevolume1'
+#            mountPath: '/etc/queue'
+#            accessModes: 'ReadWriteOnce'
+#            storageSize: '10Gi'
+#            medium: 'gp2'
+
           
-  - name: "cache"
-    defaultUUID: "dev-0"
+  - name: "redis"
+    defaultUUID: "redis-dev-0"
     docker:
       dockerImage: "redis"
       defaultTag: "8.0.2"
